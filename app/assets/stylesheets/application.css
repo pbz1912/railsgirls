@@ -18,3 +18,12 @@ table, td, th { vertical-align: middle !important; border: none !important; bord
 th { border-bottom: 1px solid #DDD !important; }
 tr:nth-child(even) { background-color: #eee; }
 td, th { padding: 5px; }
+
+.navbar a {
+  color: #999;
+}
+.navbar a:hover {
+  color: #fff;
+  text-decoration: none;
+  background-color: #222;
+}

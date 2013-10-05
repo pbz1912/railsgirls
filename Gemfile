@@ -41,3 +41,7 @@ group :doc do
 end
 
 gem 'foreigner'
+
+# Authenification 
+gem 'devise'
+
