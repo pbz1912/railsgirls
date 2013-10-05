@@ -1,9 +1,10 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>Name:</strong>
-  <%= @idea.name %>
+  <b><%= @idea.name %></b>
+  by <%= @idea.user.user_name if @idea.user.present? %>
 </p>
+
 
 <p>
   <strong>Description:</strong>
@@ -26,5 +27,5 @@
 
 <%= render 'comments/form' %>
 
-<%= link_to 'Edit', edit_idea_path(@idea) %> |
+<%= link_to 'Edit', edit_idea_path(@idea) if @idea.user == current_user %>
 <%= link_to 'Back', ideas_path %>

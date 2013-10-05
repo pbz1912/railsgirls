@@ -1,5 +1,6 @@
 class IdeasController < ApplicationController
-  before_action :set_idea, only: [:show, :edit, :update, :destroy]
+  before_filter :require_authentication, only: [:new, :create, :edit, :update, :destroy]
+  before_action :set_idea, only: [:show]
 
   # GET /ideas
   # GET /ideas.json
@@ -14,17 +15,20 @@ class IdeasController < ApplicationController
 
   # GET /ideas/new
   def new
-    @idea = Idea.new
+    @idea = current_user.ideas.build
   end
 
   # GET /ideas/1/edit
   def edit
+    unless @idea.belongs_to.user(current_user)
+      redirect_to idea_path(@idea)
+    end
   end
 
   # POST /ideas
   # POST /ideas.json
   def create
-    @idea = Idea.new(idea_params)
+    @idea = current_user.ideas.build(idea_params)
 
     respond_to do |format|
       if @idea.save
@@ -72,4 +76,17 @@ class IdeasController < ApplicationController
     def idea_params
       params.require(:idea).permit(:name, :description, :picture)
     end
+
+    # Check the user is authenticated
+    def require_authentication
+      unless user_signed_in?
+        redirect_to ideas_path
+        return false
+      end
+    end
+
+    # check user owns the idea
+    # def is_users_idea?
+    #   @idea.user == current_user
+    # end
 end
